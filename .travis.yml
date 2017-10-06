@@ -10,7 +10,7 @@ before_install:
   - pip install awscli
   - docker pull nbeck/cbrain 
   - mkdir -p ${HOME}/singularity_images
-  - docker run -ti --rm --privileged -v /var/run/docker.sock:/var/run/docker.sock -v ${HOME}/singularity_images:/output singularityware/docker2singularity "nbeck/cbrain"
+  - docker run -ti --rm --privileged -v /var/run/docker.sock:/var/run/docker.sock -v ${HOME}/singularity_images:/output filo/docker2singularity "nbeck/cbrain"
 
 script:
   - sing_img=$(ls -t ${HOME}/singularity_images | head -n 1); docker run --rm --privileged -v ${HOME}/singularity_images:/output --entrypoint /output/${sing_img} filo/docker2singularity -h
