@@ -8,7 +8,7 @@ services:
 before_install:
   - echo "TRAVIS_BRANCH $TRAVIS_BRANCH, TRAVIS_TAG $TRAVIS_TAG, TRAVIS_PULL_REQUEST $TRAVIS_PULL_REQUEST"
   - pip install awscli
-  - docker pull nbeck/cbrain .
+  - docker pull nbeck/cbrain 
   - mkdir -p ${HOME}/singularity_images
   - docker run -ti --rm --privileged -v /var/run/docker.sock:/var/run/docker.sock -v ${HOME}/singularity_images:/output singularityware/docker2singularity "nbeck/cbrain"
 
