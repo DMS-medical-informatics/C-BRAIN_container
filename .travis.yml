@@ -6,11 +6,12 @@ services:
   - docker
 
 before_install:
-  - echo "TRAVIS_BRANCH $TRAVIS_BRANCH, TRAVIS_TAG $TRAVIS_TAG, TRAVIS_PULL_REQUEST $TRAVIS_PULL_REQUEST"
+  - cbrain_image="mcin/cbrain_travis:dev"
+  - echo "TRAVIS_BRANCH $TRAVIS_BRANCH, TRAVIS_TAG $TRAVIS_TAG, TRAVIS_PULL_REQUEST $TRAVIS_PULL_REQUEST, $cbrain_image"
   - pip install awscli
-  - docker pull mcin/cbrain_travis:dev
+  - docker pull ${cbrain_image}
   - mkdir -p ${HOME}/singularity_images
-  - docker run -ti --rm --privileged -v /var/run/docker.sock:/var/run/docker.sock -v ${HOME}/singularity_images:/output filo/docker2singularity "chadcumba/cbuild:dev"
+  - docker run -ti --rm --privileged -v /var/run/docker.sock:/var/run/docker.sock -v ${HOME}/singularity_images:/output filo/docker2singularity ${cbrain_image}
 
 script:
   - sing_img=$(ls -t ${HOME}/singularity_images | head -n 1); docker run --rm --privileged -v ${HOME}/singularity_images:/output --entrypoint /output/${sing_img} filo/docker2singularity -h
